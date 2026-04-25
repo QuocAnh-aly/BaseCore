@@ -1,4 +1,4 @@
-﻿using BaseCore.Entities;
+using BaseCore.Entities;
 
 namespace BaseCore.Repository.Authen
 {
@@ -11,5 +11,6 @@ namespace BaseCore.Repository.Authen
         Task UpdateAsync(User user);
         Task DeleteAsync(int id);
         Task<(List<User> Users, int TotalCount)> SearchAsync(string keyword, int page, int pageSize);
+        Task<int> GetTotalCountAsync(string keyword);
     }
 }

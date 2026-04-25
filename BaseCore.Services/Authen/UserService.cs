@@ -1,4 +1,4 @@
-﻿using BaseCore.Entities;
+using BaseCore.Entities;
 using BaseCore.Repository.Authen;
 using BaseCore.Common;
 using System;
@@ -20,7 +20,7 @@ namespace BaseCore.Services.Authen
         // =========================
         // REGISTER
         // =========================
-        public async Task<User> Create(User user, string password)
+        public async Task<User?> Create(User user, string password)
         {
             byte[] salt;
 
@@ -43,13 +43,13 @@ namespace BaseCore.Services.Authen
         }
 
         // =========================
-        // LOGIN
+        // AUTHENTICATE
         // =========================
-        public async Task<User> Authenticate(string username, string password)
+        public async Task<User?> Authenticate(string username, string password)
         {
             var user = await _userRepository.GetByUsernameAsync(username);
 
-            if (user == null)
+            if (user == null || user.Salt == null)
                 return null;
 
             bool valid = TokenHelper.IsValidPassword(password, user.Salt, user.Password);
@@ -71,7 +71,7 @@ namespace BaseCore.Services.Authen
         // =========================
         // GET BY ID
         // =========================
-        public async Task<User> GetById(int id)
+        public async Task<User?> GetById(int id)
         {
             return await _userRepository.GetByIdAsync(id);
         }
@@ -79,7 +79,7 @@ namespace BaseCore.Services.Authen
         // =========================
         // UPDATE
         // =========================
-        public async Task Update(User user, string password = null)
+        public async Task Update(User user, string? password = null)
         {
             var existingUser = await _userRepository.GetByIdAsync(user.Id);
 
@@ -118,6 +118,33 @@ namespace BaseCore.Services.Authen
         public async Task<(List<User>, int)> Search(string keyword, int page, int pageSize)
         {
             return await _userRepository.SearchAsync(keyword, page, pageSize);
+        }
+        // =========================
+        // CHANGE PASSWORD
+        // =========================
+        public async Task<bool> ChangePasswordAsync(int userId, string oldPassword, string newPassword)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null || user.Salt == null)
+                return false;
+
+            // Xác minh mật khẩu cũ
+            bool isValid = TokenHelper.IsValidPassword(oldPassword, user.Salt, user.Password);
+            if (!isValid)
+                return false;
+
+            // Hash mật khẩu mới
+            byte[] salt;
+            user.Password = TokenHelper.HashPassword(newPassword, out salt);
+            user.Salt = salt;
+
+            await _userRepository.UpdateAsync(user);
+            return true;
+        }
+
+        public async Task<int> GetTotalCountAsync(string keyword)
+        {
+            return await _userRepository.GetTotalCountAsync(keyword);
         }
     }
 }

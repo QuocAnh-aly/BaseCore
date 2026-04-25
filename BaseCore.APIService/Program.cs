@@ -6,6 +6,7 @@ using BaseCore.Repository;
 using BaseCore.Repository.EFCore;
 using BaseCore.Repository.Authen;
 using BaseCore.Services.Authen;
+using BaseCore.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -71,9 +72,16 @@ builder.Services.AddScoped<IProductRepositoryEF, ProductRepositoryEF>();
 builder.Services.AddScoped<ICategoryRepositoryEF, CategoryRepositoryEF>();
 builder.Services.AddScoped<IOrderRepositoryEF, OrderRepositoryEF>();
 builder.Services.AddScoped<IOrderDetailRepositoryEF, OrderDetailRepositoryEF>();
+builder.Services.AddScoped<IGameAccountRepositoryEF, GameAccountRepositoryEF>();
+builder.Services.AddScoped<IUserWalletRepositoryEF, UserWalletRepositoryEF>();
+builder.Services.AddScoped<ITransactionHistoryRepositoryEF, TransactionHistoryRepositoryEF>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IGameAccountService, GameAccountService>();
+builder.Services.AddScoped<IWalletService, WalletService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 // ================= JWT AUTH =================
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]);
@@ -98,12 +106,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-// ================= MIGRATION =================
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<MySqlDbContext>();
-    db.Database.Migrate();
-}
+// // ================= MIGRATION =================
+// using (var scope = app.Services.CreateScope())
+// {
+//     var db = scope.ServiceProvider.GetRequiredService<MySqlDbContext>();
+//     db.Database.Migrate();
+// }
 
 // ================= PIPELINE =================
 if (app.Environment.IsDevelopment())

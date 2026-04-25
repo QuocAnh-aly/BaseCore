@@ -7,7 +7,7 @@ namespace BaseCore.Services
     public interface IProductService
     {
         Task<List<Product>> GetAllProductsAsync();
-        Task<Product> GetProductByIdAsync(int id);
+        Task<Product?> GetProductByIdAsync(int id);
         Task<Product> CreateProductAsync(Product product);
         Task UpdateProductAsync(Product product);   // phải là Task
         Task DeleteProductAsync(int id);

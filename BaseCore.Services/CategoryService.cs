@@ -22,7 +22,7 @@ namespace BaseCore.Services
         }
 
         // GET BY ID
-        public async Task<Category> GetByIdAsync(int id)
+        public async Task<Category?> GetByIdAsync(int id)
         {
             return await _context.Categories
                 .FirstOrDefaultAsync(c => c.Id == id);

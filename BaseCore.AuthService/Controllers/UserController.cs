@@ -5,6 +5,7 @@ using BaseCore.Services.Authen;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace BaseCore.AuthService.Controllers
 {
@@ -36,6 +37,7 @@ namespace BaseCore.AuthService.Controllers
                 Position = u.Position,
                 IsActive = u.IsActive,
                 UserType = u.UserType,
+                Balance = u.Balance,
                 Created = u.Created
             });
 
@@ -68,6 +70,7 @@ namespace BaseCore.AuthService.Controllers
                 Position = user.Position,
                 IsActive = user.IsActive,
                 UserType = user.UserType,
+                Balance = user.Balance,
                 Created = user.Created
             });
         }
@@ -170,6 +173,35 @@ namespace BaseCore.AuthService.Controllers
             await _userService.Delete(id);
             return NoContent();
         }
+
+        // ================= CHANGE PASSWORD =================
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            try 
+            {
+                if (request == null || string.IsNullOrEmpty(request.OldPassword) || string.IsNullOrEmpty(request.NewPassword))
+                    return BadRequest(new { message = "Vui lòng nhập đầy đủ mật khẩu cũ và mới" });
+
+                if (request.NewPassword.Length < 6)
+                    return BadRequest(new { message = "Mật khẩu mới phải từ 6 ký tự trở lên" });
+
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+                    return Unauthorized(new { message = "Phiên đăng nhập không hợp lệ" });
+
+                bool success = await _userService.ChangePasswordAsync(userId, request.OldPassword, request.NewPassword);
+
+                if (!success)
+                    return BadRequest(new { message = "Mật khẩu cũ không chính xác" });
+
+                return Ok(new { message = "Đổi mật khẩu thành công" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message, details = ex.ToString() });
+            }
+        }
     }
 
     public class UserResponse
@@ -182,6 +214,7 @@ namespace BaseCore.AuthService.Controllers
         public string Position { get; set; }
         public bool IsActive { get; set; }
         public int UserType { get; set; }
+        public decimal Balance { get; set; }
         public DateTime Created { get; set; }
     }
 
@@ -205,5 +238,11 @@ namespace BaseCore.AuthService.Controllers
         public string Position { get; set; }
         public int? UserType { get; set; }
         public bool? IsActive { get; set; }
+    }
+
+    public class ChangePasswordRequest
+    {
+        public string OldPassword { get; set; }
+        public string NewPassword { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 using BaseCore.Entities;
 
 namespace BaseCore.Repository
@@ -13,12 +15,34 @@ namespace BaseCore.Repository
         {
         }
 
+        // Parameterless constructor for EF migrations
+        public MySqlDbContext() : base()
+        {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+        }
+
         // DbSet for each entity
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<GameAccount> GameAccounts { get; set; }
+        public DbSet<UserWallet> UserWallets { get; set; }
+        public DbSet<TransactionHistory> TransactionHistories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -106,6 +130,60 @@ namespace BaseCore.Repository
                       .WithMany()
                       .HasForeignKey(e => e.UserId)
                       .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // Configure GameAccount entity
+            modelBuilder.Entity<GameAccount>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.AccountName).HasMaxLength(100).IsRequired();
+                entity.Property(e => e.AccountPassword).HasMaxLength(100).IsRequired();
+                entity.Property(e => e.CategoryId).IsRequired();
+                entity.Property(e => e.Price).HasPrecision(18, 2);
+                entity.Property(e => e.Status).HasMaxLength(50).IsRequired().HasDefaultValue("Available");
+                entity.Property(e => e.Description).HasMaxLength(500);
+                entity.Property(e => e.CreatedDateTime).HasColumnType("datetime2").HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.CreatedUser).HasMaxLength(100).IsRequired();
+
+                // Additional marketplace fields
+                entity.Property(e => e.GameName).HasMaxLength(100);
+                entity.Property(e => e.ImageUrl).HasMaxLength(500);
+                entity.Property(e => e.IsSold).HasDefaultValue(false);
+                entity.Property(e => e.SoldAt).HasColumnType("datetime2");
+
+                entity.HasOne(e => e.Category).WithMany().HasForeignKey(e => e.CategoryId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.Seller).WithMany().HasForeignKey(e => e.SellerId).OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(e => e.Buyer).WithMany().HasForeignKey(e => e.BuyerId).OnDelete(DeleteBehavior.SetNull);
+            });
+
+            // Configure UserWallet entity
+            modelBuilder.Entity<UserWallet>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Balance).HasPrecision(18, 2).HasDefaultValue(0);
+                entity.Property(e => e.UpdatedDateTime).HasColumnType("datetime").HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.HasOne(e => e.User).WithMany().HasForeignKey(e => e.UserId).OnDelete(DeleteBehavior.Cascade);
+                entity.HasIndex(e => e.UserId).IsUnique();
+            });
+
+            // Configure TransactionHistory entity
+            modelBuilder.Entity<TransactionHistory>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Amount).HasPrecision(18, 2);
+                entity.Property(e => e.Description).HasMaxLength(500);
+                entity.Property(e => e.PaymentMethod).HasMaxLength(100);
+                entity.Property(e => e.Created).HasColumnType("datetime").HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(50);
+
+                entity.HasOne(e => e.User).WithMany().HasForeignKey(e => e.UserId).OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(e => e.GameAccount).WithMany().HasForeignKey(e => e.GameAccountId).OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Product>().HasOne(p => p.Category).WithMany(c => c.Products).HasForeignKey(p => p.CategoryId).OnDelete(DeleteBehavior.Restrict);

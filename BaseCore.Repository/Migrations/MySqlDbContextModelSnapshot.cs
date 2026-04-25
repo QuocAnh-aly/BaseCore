@@ -62,62 +62,7 @@ namespace BaseCore.Repository.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AccessToken");
-                });
-
-            modelBuilder.Entity("BaseCore.Entities.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Electronic devices and gadgets",
-                            Name = "Electronics"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Apparel and fashion items",
-                            Name = "Clothing"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Books and publications",
-                            Name = "Books"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Home and garden products",
-                            Name = "Home & Garden"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Sports equipment and accessories",
-                            Name = "Sports"
-                        });
+                    b.ToTable("AccessToken", (string)null);
                 });
 
             modelBuilder.Entity("BaseCore.Entities.Function", b =>
@@ -159,7 +104,7 @@ namespace BaseCore.Repository.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("Function");
+                    b.ToTable("Function", (string)null);
                 });
 
             modelBuilder.Entity("BaseCore.Entities.Module", b =>
@@ -218,7 +163,7 @@ namespace BaseCore.Repository.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Module");
+                    b.ToTable("Module", (string)null);
                 });
 
             modelBuilder.Entity("BaseCore.Entities.ModuleFunction", b =>
@@ -268,7 +213,7 @@ namespace BaseCore.Repository.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("ModuleFunction");
+                    b.ToTable("ModuleFunction", (string)null);
                 });
 
             modelBuilder.Entity("BaseCore.Entities.Order", b =>
@@ -302,7 +247,7 @@ namespace BaseCore.Repository.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("BaseCore.Entities.OrderDetail", b =>
@@ -332,7 +277,7 @@ namespace BaseCore.Repository.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("BaseCore.Entities.Role", b =>
@@ -391,7 +336,7 @@ namespace BaseCore.Repository.Migrations
 
                     b.HasIndex("AccessTokenId");
 
-                    b.ToTable("Role");
+                    b.ToTable("Role", (string)null);
                 });
 
             modelBuilder.Entity("BaseCore.Entities.RoleModuleFunction", b =>
@@ -425,7 +370,7 @@ namespace BaseCore.Repository.Migrations
 
                     b.HasIndex("ModuleFunctionId");
 
-                    b.ToTable("RoleModuleFunction");
+                    b.ToTable("RoleModuleFunction", (string)null);
                 });
 
             modelBuilder.Entity("BaseCore.Entities.User", b =>
@@ -437,23 +382,26 @@ namespace BaseCore.Repository.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Contact")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -466,17 +414,15 @@ namespace BaseCore.Repository.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Position")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<byte[]>("Salt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(256)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -484,14 +430,16 @@ namespace BaseCore.Repository.Migrations
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<int>("UserType")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserName")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("BaseCore.Entities.UserModule", b =>
@@ -541,7 +489,7 @@ namespace BaseCore.Repository.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserModule");
+                    b.ToTable("UserModule", (string)null);
                 });
 
             modelBuilder.Entity("BaseCore.Entities.UserRole", b =>
@@ -574,7 +522,62 @@ namespace BaseCore.Repository.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRole");
+                    b.ToTable("UserRole", (string)null);
+                });
+
+            modelBuilder.Entity("Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Electronic devices and gadgets",
+                            Name = "Electronics"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Apparel and fashion items",
+                            Name = "Clothing"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Books and publications",
+                            Name = "Books"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Home and garden products",
+                            Name = "Home & Garden"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Sports equipment and accessories",
+                            Name = "Sports"
+                        });
                 });
 
             modelBuilder.Entity("Product", b =>
@@ -614,7 +617,7 @@ namespace BaseCore.Repository.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
 
                     b.HasData(
                         new
@@ -799,7 +802,7 @@ namespace BaseCore.Repository.Migrations
 
             modelBuilder.Entity("Product", b =>
                 {
-                    b.HasOne("BaseCore.Entities.Category", "Category")
+                    b.HasOne("Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -811,11 +814,6 @@ namespace BaseCore.Repository.Migrations
             modelBuilder.Entity("BaseCore.Entities.AccessToken", b =>
                 {
                     b.Navigation("Roles");
-                });
-
-            modelBuilder.Entity("BaseCore.Entities.Category", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("BaseCore.Entities.Function", b =>
@@ -845,6 +843,11 @@ namespace BaseCore.Repository.Migrations
                     b.Navigation("RoleModule");
 
                     b.Navigation("UserRole");
+                });
+
+            modelBuilder.Entity("Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

@@ -60,6 +60,15 @@ export const productApi = {
     delete: (id) => api.delete(`/products/${id}`),
 };
 
+// GameAccount API
+export const gameAccountApi = {
+    getAll: (gameName) => api.get(`/GameAccount`, { params: { gameName } }),
+    getById: (id) => api.get(`/GameAccount/${id}`),
+    create: (data) => api.post('/GameAccount', data),
+    update: (id, data) => api.put(`/GameAccount/${id}`, data),
+    delete: (id) => api.delete(`/GameAccount/${id}`),
+};
+
 // Category API
 export const categoryApi = {
     getAll: () => api.get('/categories'),

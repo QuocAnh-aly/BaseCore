@@ -45,7 +45,7 @@ namespace BaseCore.APIService.Controllers
             var category = new Category
             {
                 Name = dto.Name,
-                Description = dto.Description
+                Description = dto.Description ?? ""
             };
 
             await _categoryRepository.AddAsync(category);

@@ -61,10 +61,10 @@ namespace BaseCore.Repository.Authen
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query.Where(u =>
-                    u.UserName.Contains(keyword) ||
-                    u.Name.Contains(keyword) ||
-                    u.Email.Contains(keyword) ||
-                    u.Phone.Contains(keyword));
+                    (u.UserName != null && u.UserName.Contains(keyword)) ||
+                    (u.Name != null && u.Name.Contains(keyword)) ||
+                    (u.Email != null && u.Email.Contains(keyword)) ||
+                    (u.Phone != null && u.Phone.Contains(keyword)));
             }
 
             var totalCount = await query.CountAsync();
@@ -75,7 +75,42 @@ namespace BaseCore.Repository.Authen
                 .Take(pageSize)
                 .ToListAsync();
 
+            try
+            {
+                // Fetch balances for the current page
+                var userIds = users.Select(u => u.Id).ToList();
+                var wallets = await _context.UserWallets
+                    .Where(w => userIds.Contains(w.UserId))
+                    .ToListAsync();
+
+                foreach (var user in users)
+                {
+                    user.Balance = wallets.FirstOrDefault(w => w.UserId == user.Id)?.Balance ?? 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log error but don't crash the whole user list
+                System.Console.WriteLine($"Error fetching balances: {ex.Message}");
+            }
+
             return (users, totalCount);
+        }
+
+        public async Task<int> GetTotalCountAsync(string keyword)
+        {
+            var query = _context.Users.Where(u => u.IsActive);
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(u =>
+                    (u.UserName != null && u.UserName.Contains(keyword)) ||
+                    (u.Name != null && u.Name.Contains(keyword)) ||
+                    (u.Email != null && u.Email.Contains(keyword)) ||
+                    (u.Phone != null && u.Phone.Contains(keyword)));
+            }
+
+            return await query.CountAsync();
         }
     }
 }

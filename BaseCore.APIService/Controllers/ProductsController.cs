@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BaseCore.Entities;
 using BaseCore.Repository.EFCore;
+using System.Threading.Tasks;
+using System.Linq;
+using System;
 
 namespace BaseCore.APIService.Controllers
 {
@@ -75,7 +78,7 @@ namespace BaseCore.APIService.Controllers
                 Price = dto.Price,
                 Stock = dto.Stock,
                 CategoryId = dto.CategoryId,
-                Description = dto.Description,
+                Description = dto.Description ?? "",
                 ImageUrl = dto.ImageUrl ?? ""
             };
 

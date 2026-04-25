@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using BaseCore.Entities;
 using BaseCore.Repository.EFCore;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace BaseCore.APIService.Controllers
 {

@@ -35,5 +35,8 @@ namespace BaseCore.Entities
         public int UserType { get; set; } = 0;
 
         public DateTime Created { get; set; } = DateTime.Now;
+
+        [NotMapped]
+        public decimal Balance { get; set; } = 0;
     }
 }

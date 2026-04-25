@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { productApi, categoryApi } from '../services/api';
+import { gameAccountApi, categoryApi } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 
-const Products = () => {
-    const [products, setProducts] = useState([]);
+const GameAccounts = () => {
+    const [accounts, setAccounts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [keyword, setKeyword] = useState('');
-    const [categoryId, setCategoryId] = useState('');
-    const [page, setPage] = useState(1);
-    const [pageSize] = useState(10);
-    const [totalPages, setTotalPages] = useState(0);
-    const [totalCount, setTotalCount] = useState(0);
+    const [selectedGame, setSelectedGame] = useState('');
     const [showModal, setShowModal] = useState(false);
-    const [editingProduct, setEditingProduct] = useState(null);
+    const [editingAccount, setEditingAccount] = useState(null);
     const [formData, setFormData] = useState({
-        name: '',
-        price: 0,
-        stock: 0,
+        gameName: '',
+        accountName: '',
+        password: '',
         description: '',
+        price: 0,
         imageUrl: '',
-        categoryId: '',
     });
     const [error, setError] = useState('');
     const { isAdmin } = useAuth();
@@ -30,8 +25,8 @@ const Products = () => {
     }, []);
 
     useEffect(() => {
-        loadProducts();
-    }, [page, keyword, categoryId]);
+        loadAccounts();
+    }, [selectedGame]);
 
     const loadCategories = async () => {
         try {
@@ -42,51 +37,39 @@ const Products = () => {
         }
     };
 
-    const loadProducts = async () => {
+    const loadAccounts = async () => {
         setLoading(true);
         try {
-            const response = await productApi.search({
-                keyword,
-                categoryId: categoryId || undefined,
-                page,
-                pageSize,
-            });
-            setProducts(response.data.items || response.data.data || []);
-            setTotalPages(response.data.totalPages || 0);
-            setTotalCount(response.data.totalCount || 0);
+            const response = await gameAccountApi.getAll(selectedGame);
+            setAccounts(response.data || []);
         } catch (error) {
-            console.error('Failed to load products:', error);
+            console.error('Failed to load game accounts:', error);
+            setAccounts([]);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        setPage(1);
-        loadProducts();
-    };
-
-    const openModal = (product = null) => {
-        if (product) {
-            setEditingProduct(product);
+    const openModal = (account = null) => {
+        if (account) {
+            setEditingAccount(account);
             setFormData({
-                name: product.name,
-                price: product.price,
-                stock: product.stock,
-                description: product.description || '',
-                imageUrl: product.imageUrl || '',
-                categoryId: product.categoryId,
+                gameName: account.gameName || '',
+                accountName: account.accountName || '',
+                password: account.password || '',
+                description: account.description || '',
+                price: account.price || 0,
+                imageUrl: account.imageUrl || '',
             });
         } else {
-            setEditingProduct(null);
+            setEditingAccount(null);
             setFormData({
-                name: '',
-                price: 0,
-                stock: 0,
+                gameName: categories[0]?.name || '',
+                accountName: '',
+                password: '',
                 description: '',
+                price: 0,
                 imageUrl: '',
-                categoryId: categories[0]?.id || '',
             });
         }
         setError('');
@@ -95,7 +78,7 @@ const Products = () => {
 
     const closeModal = () => {
         setShowModal(false);
-        setEditingProduct(null);
+        setEditingAccount(null);
         setError('');
     };
 
@@ -107,44 +90,30 @@ const Products = () => {
             const data = {
                 ...formData,
                 price: parseFloat(formData.price),
-                stock: parseInt(formData.stock),
-                categoryId: parseInt(formData.categoryId),
             };
 
-            if (editingProduct) {
-                await productApi.update(editingProduct.id, { id: editingProduct.id, ...data });
+            if (editingAccount) {
+                await gameAccountApi.update(editingAccount.id, data);
             } else {
-                await productApi.create(data);
+                await gameAccountApi.create(data);
             }
 
             closeModal();
-            loadProducts();
+            loadAccounts();
         } catch (error) {
             setError(error.response?.data?.message || 'Operation failed');
         }
     };
 
     const handleDelete = async (id) => {
-        if (!window.confirm('Are you sure you want to delete this product?')) return;
+        if (!window.confirm('Are you sure you want to delete this game account?')) return;
 
         try {
-            await productApi.delete(id);
-            loadProducts();
+            await gameAccountApi.delete(id);
+            loadAccounts();
         } catch (error) {
-            alert('Failed to delete product');
+            alert('Failed to delete game account');
         }
-    };
-
-    const renderPagination = () => {
-        const pages = [];
-        for (let i = 1; i <= totalPages; i++) {
-            pages.push(
-                <li key={i} className={`page-item ${page === i ? 'active' : ''}`}>
-                    <button className="page-link" onClick={() => setPage(i)}>{i}</button>
-                </li>
-            );
-        }
-        return pages;
     };
 
     return (
@@ -153,7 +122,7 @@ const Products = () => {
                 <div className="container-fluid">
                     <div className="row mb-2">
                         <div className="col-sm-6">
-                            <h1 className="m-0">Products Management</h1>
+                            <h1 className="m-0">Game Accounts Management</h1>
                         </div>
                     </div>
                 </div>
@@ -165,33 +134,23 @@ const Products = () => {
                         <div className="card-header">
                             <div className="row">
                                 <div className="col-md-6">
-                                    <form onSubmit={handleSearch} className="form-inline">
-                                        <input
-                                            type="text"
-                                            className="form-control mr-2"
-                                            placeholder="Search..."
-                                            value={keyword}
-                                            onChange={(e) => setKeyword(e.target.value)}
-                                        />
+                                    <form className="form-inline" onSubmit={(e) => e.preventDefault()}>
                                         <select
                                             className="form-control mr-2"
-                                            value={categoryId}
-                                            onChange={(e) => setCategoryId(e.target.value)}
+                                            value={selectedGame}
+                                            onChange={(e) => setSelectedGame(e.target.value)}
                                         >
-                                            <option value="">All Categories</option>
+                                            <option value="">All Games</option>
                                             {categories.map(cat => (
-                                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                                <option key={cat.id} value={cat.name}>{cat.name}</option>
                                             ))}
                                         </select>
-                                        <button type="submit" className="btn btn-primary">
-                                            <i className="fas fa-search"></i> Search
-                                        </button>
                                     </form>
                                 </div>
                                 <div className="col-md-6 text-right">
                                     {isAdmin() && (
                                         <button className="btn btn-success" onClick={() => openModal()}>
-                                            <i className="fas fa-plus"></i> Add Product
+                                            <i className="fas fa-plus"></i> Add Game Account
                                         </button>
                                     )}
                                 </div>
@@ -204,43 +163,49 @@ const Products = () => {
                                 </div>
                             ) : (
                                 <>
-                                    <table className="table table-bordered table-striped">
+                                    <table className="table table-bordered table-striped" style={{tableLayout: 'fixed'}}>
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Category</th>
+                                                <th style={{width: "50px"}}>ID</th>
+                                                <th>Game Name</th>
+                                                <th>Account Name</th>
                                                 <th>Price</th>
-                                                <th>Stock</th>
-                                                {isAdmin() && <th>Actions</th>}
+                                                <th>Status</th>
+                                                {isAdmin() && <th style={{width: "100px"}}>Actions</th>}
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {products.length === 0 ? (
+                                            {accounts.length === 0 ? (
                                                 <tr>
                                                     <td colSpan={isAdmin() ? 6 : 5} className="text-center">
-                                                        No products found
+                                                        No game accounts found
                                                     </td>
                                                 </tr>
                                             ) : (
-                                                products.map(product => (
-                                                    <tr key={product.id}>
-                                                        <td>{product.id}</td>
-                                                        <td>{product.name}</td>
-                                                        <td>{product.category?.name}</td>
-                                                        <td>{product.price?.toLocaleString()} VND</td>
-                                                        <td>{product.stock}</td>
+                                                accounts.map(acc => (
+                                                    <tr key={acc.id}>
+                                                        <td>{acc.id}</td>
+                                                        <td style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{acc.gameName}</td>
+                                                        <td style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{acc.accountName}</td>
+                                                        <td>{acc.price?.toLocaleString()} VND</td>
+                                                        <td>
+                                                            {acc.isSold ? (
+                                                                <span className="badge badge-danger">Sold</span>
+                                                            ) : (
+                                                                <span className="badge badge-success">Available</span>
+                                                            )}
+                                                        </td>
                                                         {isAdmin() && (
                                                             <td>
                                                                 <button
                                                                     className="btn btn-sm btn-info mr-1"
-                                                                    onClick={() => openModal(product)}
+                                                                    onClick={() => openModal(acc)}
                                                                 >
                                                                     <i className="fas fa-edit"></i>
                                                                 </button>
                                                                 <button
                                                                     className="btn btn-sm btn-danger"
-                                                                    onClick={() => handleDelete(product.id)}
+                                                                    onClick={() => handleDelete(acc.id)}
                                                                 >
                                                                     <i className="fas fa-trash"></i>
                                                                 </button>
@@ -251,25 +216,6 @@ const Products = () => {
                                             )}
                                         </tbody>
                                     </table>
-
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <span>Total: {totalCount} products</span>
-                                        <nav>
-                                            <ul className="pagination mb-0">
-                                                <li className={`page-item ${page === 1 ? 'disabled' : ''}`}>
-                                                    <button className="page-link" onClick={() => setPage(page - 1)}>
-                                                        Previous
-                                                    </button>
-                                                </li>
-                                                {renderPagination()}
-                                                <li className={`page-item ${page === totalPages ? 'disabled' : ''}`}>
-                                                    <button className="page-link" onClick={() => setPage(page + 1)}>
-                                                        Next
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
                                 </>
                             )}
                         </div>
@@ -279,12 +225,12 @@ const Products = () => {
 
             {/* Modal */}
             {showModal && (
-                <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
+                <div className="modal fade show" style={{ display: 'block', overflow: 'auto' }} tabIndex="-1">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">
-                                    {editingProduct ? 'Edit Product' : 'Add Product'}
+                                    {editingAccount ? 'Edit Game Account' : 'Add Game Account'}
                                 </h5>
                                 <button type="button" className="close" onClick={closeModal}>
                                     <span>&times;</span>
@@ -294,47 +240,47 @@ const Products = () => {
                                 <div className="modal-body">
                                     {error && <div className="alert alert-danger">{error}</div>}
                                     <div className="form-group">
-                                        <label>Name</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value={formData.name}
-                                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Category</label>
+                                        <label>Game Category</label>
                                         <select
                                             className="form-control"
-                                            value={formData.categoryId}
-                                            onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
+                                            value={formData.gameName}
+                                            onChange={(e) => setFormData({ ...formData, gameName: e.target.value })}
                                             required
                                         >
-                                            <option value="">Select Category</option>
+                                            <option value="">Select Game</option>
                                             {categories.map(cat => (
-                                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                                <option key={cat.id} value={cat.name}>{cat.name}</option>
                                             ))}
                                         </select>
                                     </div>
                                     <div className="form-group">
-                                        <label>Price</label>
+                                        <label>Account Name / Title</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={formData.accountName}
+                                            onChange={(e) => setFormData({ ...formData, accountName: e.target.value })}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Password</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={formData.password}
+                                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                            required={!editingAccount}
+                                            placeholder={editingAccount ? "Leave blank to keep old password" : "Enter password"}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Price (VND)</label>
                                         <input
                                             type="number"
                                             className="form-control"
                                             value={formData.price}
                                             onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                                            required
-                                            min="0"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Stock</label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            value={formData.stock}
-                                            onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
                                             required
                                             min="0"
                                         />
@@ -363,7 +309,7 @@ const Products = () => {
                                         Cancel
                                     </button>
                                     <button type="submit" className="btn btn-primary">
-                                        {editingProduct ? 'Update' : 'Create'}
+                                        {editingAccount ? 'Update' : 'Create'}
                                     </button>
                                 </div>
                             </form>
@@ -376,4 +322,4 @@ const Products = () => {
     );
 };
 
-export default Products;
+export default GameAccounts;

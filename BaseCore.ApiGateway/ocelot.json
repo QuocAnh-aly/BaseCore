@@ -98,9 +98,91 @@
       ],
       "UpstreamPathTemplate": "/api/orders",
       "UpstreamHttpMethod": [ "GET", "POST", "OPTIONS" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/GameAccount/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ],
+      "UpstreamPathTemplate": "/api/GameAccount/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/GameAccount",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ],
+      "UpstreamPathTemplate": "/api/GameAccount",
+      "UpstreamHttpMethod": [ "GET", "POST", "OPTIONS" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Wallet/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ],
+      "UpstreamPathTemplate": "/api/Wallet/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Wallet",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ],
+      "UpstreamPathTemplate": "/api/Wallet",
+      "UpstreamHttpMethod": [ "GET", "POST", "OPTIONS" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Transaction/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ],
+      "UpstreamPathTemplate": "/api/Transaction/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Transaction",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ],
+      "UpstreamPathTemplate": "/api/Transaction",
+      "UpstreamHttpMethod": [ "GET", "POST", "OPTIONS" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Dashboard/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ],
+      "UpstreamPathTemplate": "/api/Dashboard/{everything}",
+      "UpstreamHttpMethod": [ "GET", "OPTIONS" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Dashboard",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "localhost", "Port": 5001 }
+      ],
+      "UpstreamPathTemplate": "/api/Dashboard",
+      "UpstreamHttpMethod": [ "GET", "OPTIONS" ]
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000"
-  }
+    "BaseUrl": "http://localhost:5000",
+    "DownstreamScheme": "http",
+    "HttpHandlerOptions": {
+      "AllowAutoRedirect": false,
+      "UseCookieContainer": false,
+      "UseTracing": false
+    }
+  },
+  "RoutesToIgnore": [
+    "/admin/*",
+    "/user/*"
+  ]
 }
