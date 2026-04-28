@@ -1,0 +1,866 @@
+.
+├── BaseCore.APIService
+│   ├── BaseCore.APIService.csproj
+│   ├── Controllers
+│   │   ├── CategoriesController.cs
+│   │   ├── DashboardController.cs
+│   │   ├── GameAccountController.cs
+│   │   ├── OrdersController.cs
+│   │   ├── ProductsController.cs
+│   │   ├── TransactionController.cs
+│   │   └── WalletController.cs
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   │           ├── AWSSDK.Core.dll
+│   │           ├── AWSSDK.SecurityToken.dll
+│   │           ├── AutoMapper.dll
+│   │           ├── Azure.Core.dll
+│   │           ├── Azure.Identity.dll
+│   │           ├── BaseCore.APIService
+│   │           ├── BaseCore.APIService.deps.json
+│   │           ├── BaseCore.APIService.dll
+│   │           ├── BaseCore.APIService.pdb
+│   │           ├── BaseCore.APIService.runtimeconfig.json
+│   │           ├── BaseCore.Common.dll
+│   │           ├── BaseCore.Common.pdb
+│   │           ├── BaseCore.DTO.dll
+│   │           ├── BaseCore.DTO.pdb
+│   │           ├── BaseCore.Entities.dll
+│   │           ├── BaseCore.Entities.pdb
+│   │           ├── BaseCore.Libs.dll
+│   │           ├── BaseCore.Libs.pdb
+│   │           ├── BaseCore.Repository.dll
+│   │           ├── BaseCore.Repository.pdb
+│   │           ├── BaseCore.Services.dll
+│   │           ├── BaseCore.Services.pdb
+│   │           ├── DnsClient.dll
+│   │           ├── Humanizer.dll
+│   │           ├── Microsoft.AspNetCore.Authentication.JwtBearer.dll
+│   │           ├── Microsoft.Bcl.AsyncInterfaces.dll
+│   │           ├── Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+│   │           ├── Microsoft.CodeAnalysis.CSharp.dll
+│   │           ├── Microsoft.CodeAnalysis.Workspaces.dll
+│   │           ├── Microsoft.CodeAnalysis.dll
+│   │           ├── Microsoft.Data.SqlClient.dll
+│   │           ├── Microsoft.EntityFrameworkCore.Abstractions.dll
+│   │           ├── Microsoft.EntityFrameworkCore.Design.dll
+│   │           ├── Microsoft.EntityFrameworkCore.Relational.dll
+│   │           ├── Microsoft.EntityFrameworkCore.SqlServer.dll
+│   │           ├── Microsoft.EntityFrameworkCore.dll
+│   │           ├── Microsoft.Extensions.DependencyModel.dll
+│   │           ├── Microsoft.Identity.Client.Extensions.Msal.dll
+│   │           ├── Microsoft.Identity.Client.dll
+│   │           ├── Microsoft.IdentityModel.Abstractions.dll
+│   │           ├── Microsoft.IdentityModel.JsonWebTokens.dll
+│   │           ├── Microsoft.IdentityModel.Logging.dll
+│   │           ├── Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+│   │           ├── Microsoft.IdentityModel.Protocols.dll
+│   │           ├── Microsoft.IdentityModel.Tokens.dll
+│   │           ├── Microsoft.OpenApi.dll
+│   │           ├── Microsoft.SqlServer.Server.dll
+│   │           ├── Microsoft.Win32.SystemEvents.dll
+│   │           ├── MongoDB.Bson.dll
+│   │           ├── MongoDB.Driver.Core.dll
+│   │           ├── MongoDB.Driver.dll
+│   │           ├── MongoDB.Libmongocrypt.dll
+│   │           ├── Mono.TextTemplating.dll
+│   │           ├── MySqlConnector.dll
+│   │           ├── Newtonsoft.Json.dll
+│   │           ├── Pipelines.Sockets.Unofficial.dll
+│   │           ├── Pomelo.EntityFrameworkCore.MySql.dll
+│   │           ├── Quartz.dll
+│   │           ├── SharpCompress.dll
+│   │           ├── Snappier.dll
+│   │           ├── StackExchange.Redis.dll
+│   │           ├── Swashbuckle.AspNetCore.Swagger.dll
+│   │           ├── Swashbuckle.AspNetCore.SwaggerGen.dll
+│   │           ├── Swashbuckle.AspNetCore.SwaggerUI.dll
+│   │           ├── System.CodeDom.dll
+│   │           ├── System.Composition.AttributedModel.dll
+│   │           ├── System.Composition.Convention.dll
+│   │           ├── System.Composition.Hosting.dll
+│   │           ├── System.Composition.Runtime.dll
+│   │           ├── System.Composition.TypedParts.dll
+│   │           ├── System.Configuration.ConfigurationManager.dll
+│   │           ├── System.Drawing.Common.dll
+│   │           ├── System.IdentityModel.Tokens.Jwt.dll
+│   │           ├── System.Memory.Data.dll
+│   │           ├── System.Runtime.Caching.dll
+│   │           ├── System.Security.Cryptography.ProtectedData.dll
+│   │           ├── System.Security.Permissions.dll
+│   │           ├── System.Windows.Extensions.dll
+│   │           ├── ZstdSharp.dll
+│   │           ├── appsettings.Development.json
+│   │           ├── appsettings.json
+│   │           ├── cs
+│   │           ├── de
+│   │           ├── es
+│   │           ├── fr
+│   │           ├── it
+│   │           ├── ja
+│   │           ├── ko
+│   │           ├── pl
+│   │           ├── pt-BR
+│   │           ├── ru
+│   │           ├── runtimes
+│   │           ├── tr
+│   │           ├── zh-Hans
+│   │           └── zh-Hant
+│   └── obj
+│       ├── BaseCore.APIService.csproj.nuget.dgspec.json
+│       ├── BaseCore.APIService.csproj.nuget.g.props
+│       ├── BaseCore.APIService.csproj.nuget.g.targets
+│       ├── Debug
+│       │   └── net8.0
+│       │       ├── BaseCore.APIService.AssemblyInfo.cs
+│       │       ├── BaseCore.APIService.AssemblyInfoInputs.cache
+│       │       ├── BaseCore.APIService.GeneratedMSBuildEditorConfig.editorconfig
+│       │       ├── BaseCore.APIService.GlobalUsings.g.cs
+│       │       ├── BaseCore.APIService.MvcApplicationPartsAssemblyInfo.cache
+│       │       ├── BaseCore.APIService.MvcApplicationPartsAssemblyInfo.cs
+│       │       ├── BaseCore.APIService.assets.cache
+│       │       ├── BaseCore.APIService.csproj.AssemblyReference.cache
+│       │       ├── BaseCore.APIService.csproj.CoreCompileInputs.cache
+│       │       ├── BaseCore.APIService.csproj.FileListAbsolute.txt
+│       │       ├── BaseCore.APIService.dll
+│       │       ├── BaseCore.APIService.genruntimeconfig.cache
+│       │       ├── BaseCore.APIService.pdb
+│       │       ├── BaseCore.APIService.sourcelink.json
+│       │       ├── BaseCore.C709CDC1.Up2Date
+│       │       ├── apphost
+│       │       ├── ref
+│       │       ├── refint
+│       │       ├── staticwebassets
+│       │       └── staticwebassets.build.json
+│       ├── project.assets.json
+│       └── project.nuget.cache
+├── BaseCore.ApiGateway
+│   ├── BaseCore.ApiGateway.csproj
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── appsettings.json
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   │           ├── BaseCore.ApiGateway
+│   │           ├── BaseCore.ApiGateway.deps.json
+│   │           ├── BaseCore.ApiGateway.dll
+│   │           ├── BaseCore.ApiGateway.pdb
+│   │           ├── BaseCore.ApiGateway.runtimeconfig.json
+│   │           ├── BaseCore.ApiGateway.staticwebassets.runtime.json
+│   │           ├── FluentValidation.dll
+│   │           ├── IPAddressRange.dll
+│   │           ├── Microsoft.AspNetCore.JsonPatch.dll
+│   │           ├── Microsoft.AspNetCore.MiddlewareAnalysis.dll
+│   │           ├── Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+│   │           ├── Microsoft.Extensions.DiagnosticAdapter.dll
+│   │           ├── Microsoft.OpenApi.dll
+│   │           ├── Newtonsoft.Json.Bson.dll
+│   │           ├── Newtonsoft.Json.dll
+│   │           ├── Ocelot.dll
+│   │           ├── Swashbuckle.AspNetCore.Swagger.dll
+│   │           ├── Swashbuckle.AspNetCore.SwaggerGen.dll
+│   │           ├── Swashbuckle.AspNetCore.SwaggerUI.dll
+│   │           ├── appsettings.json
+│   │           └── ocelot.json
+│   ├── obj
+│   │   ├── BaseCore.ApiGateway.csproj.nuget.dgspec.json
+│   │   ├── BaseCore.ApiGateway.csproj.nuget.g.props
+│   │   ├── BaseCore.ApiGateway.csproj.nuget.g.targets
+│   │   ├── Debug
+│   │   │   └── net8.0
+│   │   │       ├── BaseCore.603A33FC.Up2Date
+│   │   │       ├── BaseCore.ApiGateway.AssemblyInfo.cs
+│   │   │       ├── BaseCore.ApiGateway.AssemblyInfoInputs.cache
+│   │   │       ├── BaseCore.ApiGateway.GeneratedMSBuildEditorConfig.editorconfig
+│   │   │       ├── BaseCore.ApiGateway.GlobalUsings.g.cs
+│   │   │       ├── BaseCore.ApiGateway.MvcApplicationPartsAssemblyInfo.cache
+│   │   │       ├── BaseCore.ApiGateway.MvcApplicationPartsAssemblyInfo.cs
+│   │   │       ├── BaseCore.ApiGateway.assets.cache
+│   │   │       ├── BaseCore.ApiGateway.csproj.AssemblyReference.cache
+│   │   │       ├── BaseCore.ApiGateway.csproj.CoreCompileInputs.cache
+│   │   │       ├── BaseCore.ApiGateway.csproj.FileListAbsolute.txt
+│   │   │       ├── BaseCore.ApiGateway.dll
+│   │   │       ├── BaseCore.ApiGateway.genruntimeconfig.cache
+│   │   │       ├── BaseCore.ApiGateway.pdb
+│   │   │       ├── BaseCore.ApiGateway.sourcelink.json
+│   │   │       ├── apphost
+│   │   │       ├── ref
+│   │   │       ├── refint
+│   │   │       ├── staticwebassets
+│   │   │       ├── staticwebassets.build.json
+│   │   │       ├── staticwebassets.development.json
+│   │   │       └── staticwebassets.pack.json
+│   │   ├── project.assets.json
+│   │   └── project.nuget.cache
+│   ├── ocelot.json
+│   └── wwwroot
+│       ├── admin
+│       │   ├── assets
+│       │   │   ├── index-BzvbfvT0.js
+│       │   │   └── index-CROqUWS3.css
+│       │   └── index.html
+│       └── user
+│           ├── assets
+│           │   ├── AccountInformations-BVEyWib5.js
+│           │   ├── AccountInformations-D7CIBYpK.css
+│           │   ├── AccountPurchaseHistory-CW5uHWDy.js
+│           │   ├── Aphelios_0-eZcZ2A-c.jpg
+│           │   ├── AutoAtmRecharge-BPMXO_MI.css
+│           │   ├── AutoAtmRecharge-CZAuL2YR.js
+│           │   ├── AutoRechargeCard-B1AANLJ_.css
+│           │   ├── AutoRechargeCard-CgopFbgp.js
+│           │   ├── ChangePassword-Bw9NmnwO.css
+│           │   ├── ChangePassword-DXOIz1hG.js
+│           │   ├── GameHistory-0RbJcIT3.js
+│           │   ├── ItemPurchaseHistory-BT5rVubR.js
+│           │   ├── RechargeHistory-Cwh7UGq2.js
+│           │   ├── RiotX_ChampionList_ahri-_vjPqDgx.jpg
+│           │   ├── RiotX_ChampionList_alistar-DrL-G9ZJ.jpg
+│           │   ├── RiotX_ChampionList_amumu-2__OpSam.jpg
+│           │   ├── RiotX_ChampionList_anivia-D-GawceO.jpg
+│           │   ├── RiotX_ChampionList_annie-CjM9uzRW.jpg
+│           │   ├── RiotX_ChampionList_aurelionsol-CVWGGIhw.jpg
+│           │   ├── TransactionHistory-Bai4MpmV.js
+│           │   ├── WithdrawItem-A6UspoD5.css
+│           │   ├── WithdrawItem-BKIlP3Dn.js
+│           │   ├── _plugin-vue_export-helper-BFSWw9_d.js
+│           │   ├── aatrox-7R5d1Htm.jpg
+│           │   ├── acc-game-freefire-X7pqtYCi.gif
+│           │   ├── acc-game-lienquan-arIFnkS6.gif
+│           │   ├── acc-game-lmht-DrPE331_.gif
+│           │   ├── acc-game-tocchien-DakJOZaQ.gif
+│           │   ├── acc-lmht-sieu-re-_B20kJVA.gif
+│           │   ├── acc-lmht-tu-chon-Dh9ZIB06.gif
+│           │   ├── acc-lmht-vip-DAQ_iykO.gif
+│           │   ├── acc-not-rank-D9NJlFmf.gif
+│           │   ├── atm-recharge-DY3PvDmB.png
+│           │   ├── avatar-user-BjbAqZTz.jpg
+│           │   ├── bg-CzXsKw_k.png
+│           │   ├── image-bd424bd0-2b8b-46b2-a3f3-556175c0ba8a-CVKzSur4.jpeg
+│           │   ├── index-BH5u2-ku.js
+│           │   ├── index-BkAqosLn.css
+│           │   ├── momo-recharge-B0EmEEDr.png
+│           │   ├── momo-transfer-CQYS8_lP.png
+│           │   ├── profile1-SavmaZD7.jpeg
+│           │   ├── profile2-Ca2r8ETl.jpeg
+│           │   ├── profile3-QKAOn_zv.jpeg
+│           │   ├── profile4-DN0E82LM.jpeg
+│           │   ├── profile5-BmUtoOU-.jpeg
+│           │   └── recharge-banner-zVh4kVXf.gif
+│           ├── favicon.ico
+│           └── index.html
+├── BaseCore.AuditLog
+│   ├── BaseCore.AuditLog.csproj
+│   ├── Controllers
+│   │   ├── AuditLogController.cs
+│   │   └── HomeController.cs
+│   ├── Models
+│   │   └── ErrorViewModel.cs
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── Startup.cs
+│   ├── Views
+│   │   ├── Home
+│   │   │   ├── Index.cshtml
+│   │   │   └── Privacy.cshtml
+│   │   ├── Shared
+│   │   │   ├── Error.cshtml
+│   │   │   ├── _CookieConsentPartial.cshtml
+│   │   │   ├── _Layout.cshtml
+│   │   │   └── _ValidationScriptsPartial.cshtml
+│   │   ├── _ViewImports.cshtml
+│   │   └── _ViewStart.cshtml
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   └── wwwroot
+│       ├── css
+│       │   └── site.css
+│       ├── favicon.ico
+│       ├── js
+│       │   └── site.js
+│       └── lib
+│           ├── bootstrap
+│           │   ├── LICENSE
+│           │   └── dist
+│           ├── jquery
+│           │   ├── LICENSE.txt
+│           │   └── dist
+│           ├── jquery-validation
+│           │   ├── LICENSE.md
+│           │   └── dist
+│           └── jquery-validation-unobtrusive
+│               ├── LICENSE.txt
+│               ├── jquery.validate.unobtrusive.js
+│               └── jquery.validate.unobtrusive.min.js
+├── BaseCore.AuthService
+│   ├── BaseCore.AuthService.csproj
+│   ├── ClientApp
+│   │   ├── package-lock.json
+│   │   ├── package.json
+│   │   ├── public
+│   │   │   └── index.html
+│   │   └── src
+│   │       ├── App.jsx
+│   │       ├── components
+│   │       │   ├── MainLayout.jsx
+│   │       │   └── ProtectedRoute.jsx
+│   │       ├── contexts
+│   │       │   └── AuthContext.jsx
+│   │       ├── index.js
+│   │       ├── pages
+│   │       │   ├── Categories.jsx
+│   │       │   ├── Dashboard.jsx
+│   │       │   ├── Login.jsx
+│   │       │   ├── Products.jsx
+│   │       │   └── Users.jsx
+│   │       └── services
+│   │           └── api.js
+│   ├── Controllers
+│   │   ├── AuthController.cs
+│   │   ├── RolesController.cs
+│   │   └── UserController.cs
+│   ├── Models
+│   │   └── ErrorViewModel.cs
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── Views
+│   │   ├── Home
+│   │   │   ├── Index.cshtml
+│   │   │   └── Privacy.cshtml
+│   │   ├── Shared
+│   │   │   ├── Error.cshtml
+│   │   │   ├── _CookieConsentPartial.cshtml
+│   │   │   ├── _Layout.cshtml
+│   │   │   └── _ValidationScriptsPartial.cshtml
+│   │   ├── _ViewImports.cshtml
+│   │   └── _ViewStart.cshtml
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   │           ├── AWSSDK.Core.dll
+│   │           ├── AWSSDK.SecurityToken.dll
+│   │           ├── AutoMapper.dll
+│   │           ├── Azure.Core.dll
+│   │           ├── Azure.Identity.dll
+│   │           ├── BaseCore.AuthService
+│   │           ├── BaseCore.AuthService.deps.json
+│   │           ├── BaseCore.AuthService.dll
+│   │           ├── BaseCore.AuthService.pdb
+│   │           ├── BaseCore.AuthService.runtimeconfig.json
+│   │           ├── BaseCore.AuthService.staticwebassets.runtime.json
+│   │           ├── BaseCore.Common.dll
+│   │           ├── BaseCore.Common.pdb
+│   │           ├── BaseCore.DTO.dll
+│   │           ├── BaseCore.DTO.pdb
+│   │           ├── BaseCore.Entities.dll
+│   │           ├── BaseCore.Entities.pdb
+│   │           ├── BaseCore.Libs.dll
+│   │           ├── BaseCore.Libs.pdb
+│   │           ├── BaseCore.Repository.dll
+│   │           ├── BaseCore.Repository.pdb
+│   │           ├── BaseCore.Services.dll
+│   │           ├── BaseCore.Services.pdb
+│   │           ├── ClientApp
+│   │           ├── DnsClient.dll
+│   │           ├── Humanizer.dll
+│   │           ├── Microsoft.AspNetCore.Authentication.JwtBearer.dll
+│   │           ├── Microsoft.Bcl.AsyncInterfaces.dll
+│   │           ├── Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+│   │           ├── Microsoft.CodeAnalysis.CSharp.dll
+│   │           ├── Microsoft.CodeAnalysis.Workspaces.dll
+│   │           ├── Microsoft.CodeAnalysis.dll
+│   │           ├── Microsoft.Data.SqlClient.dll
+│   │           ├── Microsoft.EntityFrameworkCore.Abstractions.dll
+│   │           ├── Microsoft.EntityFrameworkCore.Design.dll
+│   │           ├── Microsoft.EntityFrameworkCore.Relational.dll
+│   │           ├── Microsoft.EntityFrameworkCore.SqlServer.dll
+│   │           ├── Microsoft.EntityFrameworkCore.dll
+│   │           ├── Microsoft.Extensions.DependencyModel.dll
+│   │           ├── Microsoft.Identity.Client.Extensions.Msal.dll
+│   │           ├── Microsoft.Identity.Client.dll
+│   │           ├── Microsoft.IdentityModel.Abstractions.dll
+│   │           ├── Microsoft.IdentityModel.JsonWebTokens.dll
+│   │           ├── Microsoft.IdentityModel.Logging.dll
+│   │           ├── Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+│   │           ├── Microsoft.IdentityModel.Protocols.dll
+│   │           ├── Microsoft.IdentityModel.Tokens.dll
+│   │           ├── Microsoft.OpenApi.dll
+│   │           ├── Microsoft.SqlServer.Server.dll
+│   │           ├── Microsoft.Win32.SystemEvents.dll
+│   │           ├── MongoDB.Bson.dll
+│   │           ├── MongoDB.Driver.Core.dll
+│   │           ├── MongoDB.Driver.dll
+│   │           ├── MongoDB.Libmongocrypt.dll
+│   │           ├── Mono.TextTemplating.dll
+│   │           ├── MySqlConnector.dll
+│   │           ├── Newtonsoft.Json.dll
+│   │           ├── Pipelines.Sockets.Unofficial.dll
+│   │           ├── Pomelo.EntityFrameworkCore.MySql.dll
+│   │           ├── Quartz.dll
+│   │           ├── SharpCompress.dll
+│   │           ├── Snappier.dll
+│   │           ├── StackExchange.Redis.dll
+│   │           ├── Swashbuckle.AspNetCore.Swagger.dll
+│   │           ├── Swashbuckle.AspNetCore.SwaggerGen.dll
+│   │           ├── Swashbuckle.AspNetCore.SwaggerUI.dll
+│   │           ├── System.CodeDom.dll
+│   │           ├── System.Composition.AttributedModel.dll
+│   │           ├── System.Composition.Convention.dll
+│   │           ├── System.Composition.Hosting.dll
+│   │           ├── System.Composition.Runtime.dll
+│   │           ├── System.Composition.TypedParts.dll
+│   │           ├── System.Configuration.ConfigurationManager.dll
+│   │           ├── System.Drawing.Common.dll
+│   │           ├── System.IdentityModel.Tokens.Jwt.dll
+│   │           ├── System.Memory.Data.dll
+│   │           ├── System.Runtime.Caching.dll
+│   │           ├── System.Security.Cryptography.ProtectedData.dll
+│   │           ├── System.Security.Permissions.dll
+│   │           ├── System.Windows.Extensions.dll
+│   │           ├── ZstdSharp.dll
+│   │           ├── appsettings.Development.json
+│   │           ├── appsettings.json
+│   │           ├── cs
+│   │           ├── de
+│   │           ├── es
+│   │           ├── fr
+│   │           ├── it
+│   │           ├── ja
+│   │           ├── ko
+│   │           ├── pl
+│   │           ├── pt-BR
+│   │           ├── ru
+│   │           ├── runtimes
+│   │           ├── tr
+│   │           ├── zh-Hans
+│   │           └── zh-Hant
+│   ├── obj
+│   │   ├── BaseCore.AuthService.csproj.nuget.dgspec.json
+│   │   ├── BaseCore.AuthService.csproj.nuget.g.props
+│   │   ├── BaseCore.AuthService.csproj.nuget.g.targets
+│   │   ├── Debug
+│   │   │   └── net8.0
+│   │   │       ├── BaseCore.A4C47D7E.Up2Date
+│   │   │       ├── BaseCore.AuthService.AssemblyInfo.cs
+│   │   │       ├── BaseCore.AuthService.AssemblyInfoInputs.cache
+│   │   │       ├── BaseCore.AuthService.GeneratedMSBuildEditorConfig.editorconfig
+│   │   │       ├── BaseCore.AuthService.GlobalUsings.g.cs
+│   │   │       ├── BaseCore.AuthService.MvcApplicationPartsAssemblyInfo.cache
+│   │   │       ├── BaseCore.AuthService.MvcApplicationPartsAssemblyInfo.cs
+│   │   │       ├── BaseCore.AuthService.RazorAssemblyInfo.cache
+│   │   │       ├── BaseCore.AuthService.RazorAssemblyInfo.cs
+│   │   │       ├── BaseCore.AuthService.assets.cache
+│   │   │       ├── BaseCore.AuthService.csproj.AssemblyReference.cache
+│   │   │       ├── BaseCore.AuthService.csproj.CoreCompileInputs.cache
+│   │   │       ├── BaseCore.AuthService.csproj.FileListAbsolute.txt
+│   │   │       ├── BaseCore.AuthService.dll
+│   │   │       ├── BaseCore.AuthService.genruntimeconfig.cache
+│   │   │       ├── BaseCore.AuthService.pdb
+│   │   │       ├── BaseCore.AuthService.sourcelink.json
+│   │   │       ├── apphost
+│   │   │       ├── ref
+│   │   │       ├── refint
+│   │   │       ├── staticwebassets
+│   │   │       ├── staticwebassets.build.json
+│   │   │       ├── staticwebassets.development.json
+│   │   │       └── staticwebassets.pack.json
+│   │   ├── project.assets.json
+│   │   └── project.nuget.cache
+│   └── wwwroot
+│       ├── css
+│       │   └── site.css
+│       ├── favicon.ico
+│       ├── js
+│       │   └── site.js
+│       └── lib
+│           ├── bootstrap
+│           │   ├── LICENSE
+│           │   └── dist
+│           ├── jquery
+│           │   ├── LICENSE.txt
+│           │   └── dist
+│           ├── jquery-validation
+│           │   ├── LICENSE.md
+│           │   └── dist
+│           └── jquery-validation-unobtrusive
+│               ├── LICENSE.txt
+│               ├── jquery.validate.unobtrusive.js
+│               └── jquery.validate.unobtrusive.min.js
+├── BaseCore.Common
+│   ├── AppSettings.cs
+│   ├── Auth
+│   │   ├── RoleConstant.cs
+│   │   └── TokenHelper.cs
+│   ├── BaseCore.Common.csproj
+│   ├── Constants.cs
+│   ├── Entity.cs
+│   ├── Enums.cs
+│   ├── Extensions
+│   │   └── MediaExtension.cs
+│   ├── Helpers
+│   │   ├── EnumHelper.cs
+│   │   └── FileHelper.cs
+│   ├── RedisUtils.cs
+│   ├── Sockets
+│   │   ├── WebSocketConnectionManager.cs
+│   │   ├── WebSocketHandler.cs
+│   │   ├── WebSocketManagerExtensions.cs
+│   │   └── WebSocketManagerMiddleware.cs
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   │           ├── BaseCore.Common.deps.json
+│   │           ├── BaseCore.Common.dll
+│   │           └── BaseCore.Common.pdb
+│   └── obj
+│       ├── BaseCore.Common.csproj.nuget.dgspec.json
+│       ├── BaseCore.Common.csproj.nuget.g.props
+│       ├── BaseCore.Common.csproj.nuget.g.targets
+│       ├── Debug
+│       │   └── net8.0
+│       │       ├── BaseCore.Common.AssemblyInfo.cs
+│       │       ├── BaseCore.Common.AssemblyInfoInputs.cache
+│       │       ├── BaseCore.Common.GeneratedMSBuildEditorConfig.editorconfig
+│       │       ├── BaseCore.Common.GlobalUsings.g.cs
+│       │       ├── BaseCore.Common.assets.cache
+│       │       ├── BaseCore.Common.csproj.AssemblyReference.cache
+│       │       ├── BaseCore.Common.csproj.CoreCompileInputs.cache
+│       │       ├── BaseCore.Common.csproj.FileListAbsolute.txt
+│       │       ├── BaseCore.Common.dll
+│       │       ├── BaseCore.Common.pdb
+│       │       ├── BaseCore.Common.sourcelink.json
+│       │       ├── ref
+│       │       └── refint
+│       ├── project.assets.json
+│       └── project.nuget.cache
+├── BaseCore.DTO
+│   ├── AuthPlatform
+│   │   ├── FunctionDto.cs
+│   │   ├── FunctionModel.cs
+│   │   ├── FunctionSearchDto.cs
+│   │   ├── GroupRoleDto.cs
+│   │   ├── InsertUserParam.cs
+│   │   ├── ModuleDto.cs
+│   │   ├── ModuleFunctionDto.cs
+│   │   ├── ModuleSearchDto.cs
+│   │   ├── ProductDto.cs
+│   │   ├── RoleDto.cs
+│   │   ├── RoleModuleFunctionDto.cs
+│   │   ├── RoleModuleFunctionResult.cs
+│   │   ├── RoleSearchDto.cs
+│   │   ├── UserDto.cs
+│   │   ├── UserRoleDto.cs
+│   │   ├── UserSearchDto.cs
+│   │   └── UserSearchResult.cs
+│   ├── BaseCore.DTO.csproj
+│   ├── Common
+│   │   ├── Paging.cs
+│   │   ├── SearchResult.cs
+│   │   └── SortColumn.cs
+│   ├── Response
+│   │   ├── ApiResponse.cs
+│   │   ├── ConstantResponseMessage.cs
+│   │   └── JsonRestApiResponse.cs
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   │           ├── BaseCore.DTO.deps.json
+│   │           ├── BaseCore.DTO.dll
+│   │           └── BaseCore.DTO.pdb
+│   └── obj
+│       ├── BaseCore.DTO.csproj.nuget.dgspec.json
+│       ├── BaseCore.DTO.csproj.nuget.g.props
+│       ├── BaseCore.DTO.csproj.nuget.g.targets
+│       ├── Debug
+│       │   └── net8.0
+│       │       ├── BaseCore.DTO.AssemblyInfo.cs
+│       │       ├── BaseCore.DTO.AssemblyInfoInputs.cache
+│       │       ├── BaseCore.DTO.GeneratedMSBuildEditorConfig.editorconfig
+│       │       ├── BaseCore.DTO.GlobalUsings.g.cs
+│       │       ├── BaseCore.DTO.assets.cache
+│       │       ├── BaseCore.DTO.csproj.AssemblyReference.cache
+│       │       ├── BaseCore.DTO.csproj.CoreCompileInputs.cache
+│       │       ├── BaseCore.DTO.csproj.FileListAbsolute.txt
+│       │       ├── BaseCore.DTO.dll
+│       │       ├── BaseCore.DTO.pdb
+│       │       ├── BaseCore.DTO.sourcelink.json
+│       │       ├── ref
+│       │       └── refint
+│       ├── project.assets.json
+│       └── project.nuget.cache
+├── BaseCore.Entities
+│   ├── AccessToken.cs
+│   ├── Audit
+│   │   ├── IAuditable.cs
+│   │   └── IVersionable.cs
+│   ├── BaseCore.Entities.csproj
+│   ├── Category.cs
+│   ├── Function.cs
+│   ├── GameAccount.cs
+│   ├── GroupRoleAgency.cs
+│   ├── Module.cs
+│   ├── ModuleFunction.cs
+│   ├── Order.cs
+│   ├── OrderDetail.cs
+│   ├── Product.cs
+│   ├── Role.cs
+│   ├── RoleModuleFunction.cs
+│   ├── SeedConfiguration.cs
+│   ├── Setting.cs
+│   ├── TransactionHistory.cs
+│   ├── User.cs
+│   ├── UserModule.cs
+│   ├── UserRole.cs
+│   ├── UserWallet.cs
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   │           ├── BaseCore.Common.dll
+│   │           ├── BaseCore.Common.pdb
+│   │           ├── BaseCore.DTO.dll
+│   │           ├── BaseCore.DTO.pdb
+│   │           ├── BaseCore.Entities.deps.json
+│   │           ├── BaseCore.Entities.dll
+│   │           └── BaseCore.Entities.pdb
+│   └── obj
+│       ├── BaseCore.Entities.csproj.nuget.dgspec.json
+│       ├── BaseCore.Entities.csproj.nuget.g.props
+│       ├── BaseCore.Entities.csproj.nuget.g.targets
+│       ├── Debug
+│       │   └── net8.0
+│       │       ├── BaseCore.E7D3D7DB.Up2Date
+│       │       ├── BaseCore.Entities.AssemblyInfo.cs
+│       │       ├── BaseCore.Entities.AssemblyInfoInputs.cache
+│       │       ├── BaseCore.Entities.GeneratedMSBuildEditorConfig.editorconfig
+│       │       ├── BaseCore.Entities.GlobalUsings.g.cs
+│       │       ├── BaseCore.Entities.assets.cache
+│       │       ├── BaseCore.Entities.csproj.AssemblyReference.cache
+│       │       ├── BaseCore.Entities.csproj.CoreCompileInputs.cache
+│       │       ├── BaseCore.Entities.csproj.FileListAbsolute.txt
+│       │       ├── BaseCore.Entities.dll
+│       │       ├── BaseCore.Entities.pdb
+│       │       ├── BaseCore.Entities.sourcelink.json
+│       │       ├── ref
+│       │       └── refint
+│       ├── project.assets.json
+│       └── project.nuget.cache
+├── BaseCore.Libs
+│   ├── BaseCore.Libs.csproj
+│   ├── Utils
+│   │   ├── EnumHelper.cs
+│   │   ├── LinqExtension.cs
+│   │   └── Utils.cs
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   │           ├── BaseCore.Common.dll
+│   │           ├── BaseCore.Common.pdb
+│   │           ├── BaseCore.DTO.dll
+│   │           ├── BaseCore.DTO.pdb
+│   │           ├── BaseCore.Entities.dll
+│   │           ├── BaseCore.Entities.pdb
+│   │           ├── BaseCore.Libs.deps.json
+│   │           ├── BaseCore.Libs.dll
+│   │           └── BaseCore.Libs.pdb
+│   └── obj
+│       ├── BaseCore.Libs.csproj.nuget.dgspec.json
+│       ├── BaseCore.Libs.csproj.nuget.g.props
+│       ├── BaseCore.Libs.csproj.nuget.g.targets
+│       ├── Debug
+│       │   └── net8.0
+│       │       ├── BaseCore.063C3EEA.Up2Date
+│       │       ├── BaseCore.Libs.AssemblyInfo.cs
+│       │       ├── BaseCore.Libs.AssemblyInfoInputs.cache
+│       │       ├── BaseCore.Libs.GeneratedMSBuildEditorConfig.editorconfig
+│       │       ├── BaseCore.Libs.GlobalUsings.g.cs
+│       │       ├── BaseCore.Libs.assets.cache
+│       │       ├── BaseCore.Libs.csproj.AssemblyReference.cache
+│       │       ├── BaseCore.Libs.csproj.CoreCompileInputs.cache
+│       │       ├── BaseCore.Libs.csproj.FileListAbsolute.txt
+│       │       ├── BaseCore.Libs.dll
+│       │       ├── BaseCore.Libs.pdb
+│       │       ├── BaseCore.Libs.sourcelink.json
+│       │       ├── ref
+│       │       └── refint
+│       ├── project.assets.json
+│       └── project.nuget.cache
+├── BaseCore.LogService
+│   ├── BaseCore.LogService.csproj
+│   ├── Entities
+│   │   ├── LogAction.cs
+│   │   └── LogError.cs
+│   ├── Extensions
+│   │   └── MiddlewareExtensions.cs
+│   ├── LogActionService.cs
+│   ├── LogErrorService.cs
+│   ├── Middleware
+│   │   └── ExceptionMiddleware.cs
+│   └── Model
+│       └── ErrorDetails.cs
+├── BaseCore.Repository
+│   ├── Authen
+│   │   ├── IUserRepository.cs
+│   │   └── UserRepository.cs
+│   ├── BaseCore.Repository.csproj
+│   ├── EFCore
+│   │   ├── CategoryRepository.cs
+│   │   ├── GameAccountRepository.cs
+│   │   ├── IGameAccountRepositoryEF.cs
+│   │   ├── IRepository.cs
+│   │   ├── ITransactionHistoryRepositoryEF.cs
+│   │   ├── IUserWalletRepositoryEF.cs
+│   │   ├── OrderRepository.cs
+│   │   ├── ProductRepository.cs
+│   │   ├── Repository.cs
+│   │   ├── TransactionHistoryRepository.cs
+│   │   ├── UserRepository.cs
+│   │   └── UserWalletRepository.cs
+│   ├── Migrations
+│   │   ├── 20260422085252_InitDatabase.Designer.cs
+│   │   ├── 20260422085252_InitDatabase.cs
+│   │   ├── 20260425160851_AddNewTables.Designer.cs
+│   │   ├── 20260425160851_AddNewTables.cs
+│   │   └── MySqlDbContextModelSnapshot.cs
+│   ├── MySqlDbContext.cs
+│   ├── appsettings.json
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   │           ├── BaseCore.Common.dll
+│   │           ├── BaseCore.Common.pdb
+│   │           ├── BaseCore.DTO.dll
+│   │           ├── BaseCore.DTO.pdb
+│   │           ├── BaseCore.Entities.dll
+│   │           ├── BaseCore.Entities.pdb
+│   │           ├── BaseCore.Libs.dll
+│   │           ├── BaseCore.Libs.pdb
+│   │           ├── BaseCore.Repository.deps.json
+│   │           ├── BaseCore.Repository.dll
+│   │           ├── BaseCore.Repository.pdb
+│   │           └── BaseCore.Repository.runtimeconfig.json
+│   └── obj
+│       ├── BaseCore.Repository.csproj.nuget.dgspec.json
+│       ├── BaseCore.Repository.csproj.nuget.g.props
+│       ├── BaseCore.Repository.csproj.nuget.g.targets
+│       ├── Debug
+│       │   └── net8.0
+│       │       ├── BaseCore.92782631.Up2Date
+│       │       ├── BaseCore.Repository.AssemblyInfo.cs
+│       │       ├── BaseCore.Repository.AssemblyInfoInputs.cache
+│       │       ├── BaseCore.Repository.GeneratedMSBuildEditorConfig.editorconfig
+│       │       ├── BaseCore.Repository.GlobalUsings.g.cs
+│       │       ├── BaseCore.Repository.assets.cache
+│       │       ├── BaseCore.Repository.csproj.AssemblyReference.cache
+│       │       ├── BaseCore.Repository.csproj.CoreCompileInputs.cache
+│       │       ├── BaseCore.Repository.csproj.FileListAbsolute.txt
+│       │       ├── BaseCore.Repository.dll
+│       │       ├── BaseCore.Repository.genruntimeconfig.cache
+│       │       ├── BaseCore.Repository.pdb
+│       │       ├── BaseCore.Repository.sourcelink.json
+│       │       ├── ref
+│       │       └── refint
+│       ├── project.assets.json
+│       └── project.nuget.cache
+├── BaseCore.Services
+│   ├── Authen
+│   │   ├── IUserService.cs
+│   │   └── UserService.cs
+│   ├── BaseCore.Services.csproj
+│   ├── CategoryService.cs
+│   ├── GameAccountService.cs
+│   ├── ICategoryService.cs
+│   ├── IGameAccountService.cs
+│   ├── IOrderService.cs
+│   ├── IProductService.cs
+│   ├── ITransactionService.cs
+│   ├── IWalletService.cs
+│   ├── ProductService.cs
+│   ├── TransactionService.cs
+│   ├── WalletService.cs
+│   ├── bin
+│   │   └── Debug
+│   │       └── net8.0
+│   │           ├── BaseCore.Common.dll
+│   │           ├── BaseCore.Common.pdb
+│   │           ├── BaseCore.DTO.dll
+│   │           ├── BaseCore.DTO.pdb
+│   │           ├── BaseCore.Entities.dll
+│   │           ├── BaseCore.Entities.pdb
+│   │           ├── BaseCore.Libs.dll
+│   │           ├── BaseCore.Libs.pdb
+│   │           ├── BaseCore.Repository.dll
+│   │           ├── BaseCore.Repository.pdb
+│   │           ├── BaseCore.Services.deps.json
+│   │           ├── BaseCore.Services.dll
+│   │           └── BaseCore.Services.pdb
+│   └── obj
+│       ├── BaseCore.Services.csproj.nuget.dgspec.json
+│       ├── BaseCore.Services.csproj.nuget.g.props
+│       ├── BaseCore.Services.csproj.nuget.g.targets
+│       ├── Debug
+│       │   └── net8.0
+│       │       ├── BaseCore.A71D4B49.Up2Date
+│       │       ├── BaseCore.Services.AssemblyInfo.cs
+│       │       ├── BaseCore.Services.AssemblyInfoInputs.cache
+│       │       ├── BaseCore.Services.GeneratedMSBuildEditorConfig.editorconfig
+│       │       ├── BaseCore.Services.GlobalUsings.g.cs
+│       │       ├── BaseCore.Services.assets.cache
+│       │       ├── BaseCore.Services.csproj.AssemblyReference.cache
+│       │       ├── BaseCore.Services.csproj.CoreCompileInputs.cache
+│       │       ├── BaseCore.Services.csproj.FileListAbsolute.txt
+│       │       ├── BaseCore.Services.dll
+│       │       ├── BaseCore.Services.pdb
+│       │       ├── BaseCore.Services.sourcelink.json
+│       │       ├── ref
+│       │       └── refint
+│       ├── project.assets.json
+│       └── project.nuget.cache
+├── BaseCore.UnitTest
+│   ├── BaseConfigService.cs
+│   ├── BaseCore.UnitTest.csproj
+│   ├── UnitTestUserService.cs
+│   └── appsettings.json
+├── BaseCore.sln
+├── Examples
+│   ├── Bai4-HTML
+│   │   └── index.html
+│   ├── Bai5-CSS
+│   │   ├── index.html
+│   │   └── styles.css
+│   ├── Bai6-JavaScript
+│   │   ├── index.html
+│   │   └── script.js
+│   └── Bai7-JavaScript-Advanced
+│       ├── index.html
+│       └── script.js
+├── README.md
+├── ShopGame - backend - EFCore structure.txt
+├── Test
+│   ├── Dockerfile
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── Test.csproj
+│   ├── Worker.cs
+│   ├── appsettings.Development.json
+│   └── appsettings.json
+├── UpgradeLog.htm
+├── kill-all.sh
+├── package-lock.json
+├── run-all.sh
+├── start-services.bat
+└── start-services.ps1
+
+190 directories, 674 files
